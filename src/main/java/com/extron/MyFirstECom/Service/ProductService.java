@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private ProductRepo prodRepo;
+    private final ProductRepo prodRepo;
 
     public ProductService(ProductRepo prodRepo){
         this.prodRepo = prodRepo;
@@ -17,5 +17,13 @@ public class ProductService {
 
     public List<Product> getAllProducts(){
         return prodRepo.findAll();
+    }
+
+    public void addProduct(Product prod) {
+        prodRepo.save(prod);
+    }
+
+    public Product updateProductById(int Id, Product prod) {
+        return prodRepo.save(prod);
     }
 }
