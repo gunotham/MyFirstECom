@@ -32,6 +32,11 @@ public class HomeController {
         return new ResponseEntity<>(prodService.getAllProducts(), HttpStatus.OK);
     }
 
+    @GetMapping("/product/{Id}")
+    public ResponseEntity<Product> getProductById(@PathVariable int Id){
+        return new ResponseEntity<>(prodService.getProductById(Id), HttpStatus.OK);
+    }
+
     @PutMapping("/product/{Id}")
     public ResponseEntity<String> updateProductById(@PathVariable int Id, @RequestBody Product prod){
         Product product = prodService.updateProductById(Id, prod);
@@ -39,6 +44,14 @@ public class HomeController {
             return new ResponseEntity<>("Successfully updated the Product", HttpStatus.OK);
         }
         return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/product/{Id}")
+    public ResponseEntity<String> deleteProductById(@PathVariable int Id){
+        if(prodService.deleteProductById(Id)){
+            return new ResponseEntity<>("Successfully deleted Product", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Unable to delete data or invalid product Id", HttpStatus.BAD_REQUEST);
     }
 
 }
