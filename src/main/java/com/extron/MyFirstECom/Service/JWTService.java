@@ -10,5 +10,6 @@ public class JWTService {
 
     public JWTService() throws NoSuchAlgorithmException {
         KeyGenerator keyGen =KeyGenerator.getInstance("HmacSHA256");
+        System.out.println("TESTING");
     }
 }
