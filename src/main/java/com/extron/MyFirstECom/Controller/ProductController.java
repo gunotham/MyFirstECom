@@ -10,34 +10,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class HomeController {
+@RequestMapping("/api/products")
+public class ProductController {
 
     @Autowired
     private ProductService prodService;
+    
 
-    @GetMapping("/")
-    public String heyWorld(){
-        return "Test process";
-    }
-
-    @PostMapping("/product")
+    @PostMapping
     public ResponseEntity<String> addProduct(@RequestBody Product prod){
         prodService.addProduct(prod);
         return new ResponseEntity<>("Successfully added data", HttpStatus.OK);
     }
 
-    @GetMapping("/products")
+    @GetMapping
     public ResponseEntity<List<Product>> getAllProducts(){
         return new ResponseEntity<>(prodService.getAllProducts(), HttpStatus.OK);
     }
 
-    @GetMapping("/product/{Id}")
-    public ResponseEntity<Product> getProductById(@PathVariable int Id){
+    @GetMapping("/{Id}")
+    public ResponseEntity<Product> getProductById(@PathVariable long Id){
         return new ResponseEntity<>(prodService.getProductById(Id), HttpStatus.OK);
     }
 
-    @PutMapping("/product/{Id}")
-    public ResponseEntity<String> updateProductById(@PathVariable int Id, @RequestBody Product prod){
+    @PutMapping("/{Id}")
+    public ResponseEntity<String> updateProductById(@PathVariable long Id, @RequestBody Product prod){
         Product product = prodService.updateProductById(Id, prod);
         if(product != null){
             return new ResponseEntity<>("Successfully updated the Product", HttpStatus.OK);
@@ -45,8 +42,8 @@ public class HomeController {
         return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/product/{Id}")
-    public ResponseEntity<String> deleteProductById(@PathVariable int Id){
+    @DeleteMapping("/{Id}")
+    public ResponseEntity<String> deleteProductById(@PathVariable long Id){
         if(prodService.deleteProductById(Id)){
             return new ResponseEntity<>("Successfully deleted Product", HttpStatus.OK);
         }
