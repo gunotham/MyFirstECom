@@ -21,7 +21,7 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<String> userLogin(@RequestBody Users user){
         return new ResponseEntity<>(service.verifyUser(user), HttpStatus.OK);
     }
