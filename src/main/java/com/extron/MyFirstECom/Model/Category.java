@@ -1,6 +1,9 @@
 package com.extron.MyFirstECom.Model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,17 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
-
+public class Category {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private String username;
-    private String password;
-    private String userEmail;
+    private Long category_Id;
     
-    @OneToOne(mappedBy = "user")
-    private Cart cart;
-
+    private String name;
 }

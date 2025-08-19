@@ -1,9 +1,6 @@
 package com.extron.MyFirstECom.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +15,13 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartItemId;
 
-
-    private int cartId;
-    private int prodId;
+    @ManyToOne
+    @JoinColumn(name = "cartId", nullable = false)
+    private Cart cart;
+    
+    @ManyToOne
+    @JoinColumn(name = "prodId")
+    private Product prod;
+    
     private int quantity;
 }
