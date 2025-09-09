@@ -16,9 +16,10 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/register")
-    public ResponseEntity<Users> registerUser(@RequestBody Users user){
+    public ResponseEntity<String> registerUser(@RequestBody Users user){
         Users newUser = service.registerUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+        
+        return new ResponseEntity<>("Registration Successful", HttpStatus.OK);
     }
 
     @PostMapping("/api/login")
