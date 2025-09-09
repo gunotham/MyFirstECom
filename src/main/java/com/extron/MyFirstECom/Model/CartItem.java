@@ -1,5 +1,6 @@
 package com.extron.MyFirstECom.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +14,11 @@ public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartItemId;
+    private long cartItemId;
 
     @ManyToOne
     @JoinColumn(name = "cartId", nullable = false)
+    @JsonBackReference
     private Cart cart;
     
     @ManyToOne

@@ -24,12 +24,12 @@ public class ProductService {
         prodRepo.save(prod);
     }
 
-    public Product updateProductById(int Id, Product prod) {
+    public Product updateProductById(long Id, Product prod) {
         prod.setProd_id(Id);
         return prodRepo.save(prod);
     }
 
-    public boolean deleteProductById(int id) {
+    public boolean deleteProductById(long id) {
         Optional<Product> prod = prodRepo.findById(id);
 
         if(prod.isPresent()){
@@ -39,7 +39,7 @@ public class ProductService {
         return false;
     }
 
-    public Product getProductById(int id) {
+    public Product getProductById(long id) {
         return prodRepo.findById(id).orElse(null);
     }
 }

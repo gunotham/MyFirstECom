@@ -24,8 +24,6 @@ public class Product {
     
     private String description;
     private BigDecimal prod_price;
-    private boolean prod_availability;
     private int stockQuantity;
-    
     
 }
