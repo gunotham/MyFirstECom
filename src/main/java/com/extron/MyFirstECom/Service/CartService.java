@@ -54,8 +54,12 @@ public class CartService {
             throw new RuntimeException("quantity must be greater than 0");
         }
         
+        
         if (product.getStockQuantity()<quantity){
             throw new RuntimeException("Stock quantity is less than "+quantity+" available quantity "+ product.getStockQuantity());
+        }
+        else{
+            product.setStockQuantity(product.getStockQuantity() - quantity);
         }
         
         Cart cart = cartRepo.findByUserUserId(userId);        
