@@ -28,9 +28,7 @@ public class CartService {
     private ProductRepo productRepo;
 
     public List<CartItem> getCartItems(Long userId) {
-        System.out.println(userId);
         Users user = userRepo.findById(userId).orElse(null);
-        
         Cart cart = cartRepo.findByUserUserId(userId);
         
         return cart.getCartItem();
@@ -45,7 +43,6 @@ public class CartService {
         }
         
         Product product = productRepo.findById(prodId).orElse(null);
-        
         if(product == null){
             throw new RuntimeException("Product not found");
         }
