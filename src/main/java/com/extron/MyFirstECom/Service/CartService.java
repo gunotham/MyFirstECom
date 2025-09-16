@@ -29,9 +29,9 @@ public class CartService {
 
     public List<CartItem> getCartItems(Long userId) {
         Users user = userRepo.findById(userId).orElse(null);
-        Cart cart = cartRepo.findByUserUserId(userId);
+        Cart cart = cartRepo.findByUserId(userId);
         
-        return cart.getCartItem();
+        return cart.getItems();
     }
 
     public String addCartItems(Long userId, Long prodId, Integer quantity) {
@@ -59,11 +59,11 @@ public class CartService {
             product.setStockQuantity(product.getStockQuantity() - quantity);
         }
         
-        Cart cart = cartRepo.findByUserUserId(userId);        
+        Cart cart = cartRepo.findByUserId(userId);        
         
         CartItem newItem = new CartItem();
         newItem.setCart(cart);
-        newItem.setProd(product);
+        newItem.setProduct(product);
         newItem.setQuantity(quantity);
         
         cartItemRepo.save(newItem);

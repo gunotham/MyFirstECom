@@ -6,18 +6,18 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 public class Order {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long order_id;
+    private Long id;
     
     @ManyToOne
     @JoinColumn(name = "userId")
     private Users user;
     
-    private Date ordered_at;
-    private Float order_amount;
+    private Date orderedAt;
+    private Float amount;
     
 }

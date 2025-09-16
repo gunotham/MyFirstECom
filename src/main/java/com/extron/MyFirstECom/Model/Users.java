@@ -19,11 +19,11 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private long userId;
+    private long id;
  
     private String username;
     private String password;
-    private String userEmail;
+    private String email;
     
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference

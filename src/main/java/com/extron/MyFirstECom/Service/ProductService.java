@@ -25,7 +25,7 @@ public class ProductService {
     }
 
     public Product updateProductById(long Id, Product prod) {
-        prod.setProd_id(Id);
+        prod.setId(Id);
         return prodRepo.save(prod);
     }
 

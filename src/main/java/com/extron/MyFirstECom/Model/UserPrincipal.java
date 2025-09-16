@@ -33,7 +33,7 @@ public class UserPrincipal implements UserDetails {
     }
     
     public Long getUserId(){
-        return user.getUserId();
+        return user.getId();
     }
 
     @Override

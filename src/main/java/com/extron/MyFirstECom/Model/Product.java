@@ -15,15 +15,15 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long prod_id;
-    private String prod_name;
+    private long id;
+    private String name;
     
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category_id;
+    private Category category;
     
     private String description;
-    private BigDecimal prod_price;
+    private BigDecimal price;
     private int stockQuantity;
     
 }

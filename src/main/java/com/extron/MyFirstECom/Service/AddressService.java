@@ -51,7 +51,7 @@ public class AddressService {
         
         Address updatingAddress = addressRepo.findById(addressInfo.getAddressId()).orElse(null);
         
-        if(updatingAddress == null || updatingAddress.getUser().getUserId() != userId){
+        if(updatingAddress == null || updatingAddress.getUser().getId() != userId){
             return "Error: Address not found or does not belong to the user!";
         }
         
