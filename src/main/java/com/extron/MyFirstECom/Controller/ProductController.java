@@ -28,23 +28,23 @@ public class ProductController {
         return new ResponseEntity<>(prodService.getAllProducts(), HttpStatus.OK);
     }
 
-    @GetMapping("/{Id}")
-    public ResponseEntity<Product> getProductById(@PathVariable long Id){
-        return new ResponseEntity<>(prodService.getProductById(Id), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable long id){
+        return new ResponseEntity<>(prodService.getProductById(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{Id}")
-    public ResponseEntity<String> updateProductById(@PathVariable long Id, @RequestBody Product prod){
-        Product product = prodService.updateProductById(Id, prod);
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateProductById(@PathVariable long id, @RequestBody Product prod){
+        Product product = prodService.updateProductById(id, prod);
         if(product != null){
             return new ResponseEntity<>("Successfully updated the Product", HttpStatus.OK);
         }
         return new ResponseEntity<>("Failed to update", HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/{Id}")
-    public ResponseEntity<String> deleteProductById(@PathVariable long Id){
-        if(prodService.deleteProductById(Id)){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProductById(@PathVariable long id){
+        if(prodService.deleteProductById(id)){
             return new ResponseEntity<>("Successfully deleted Product", HttpStatus.OK);
         }
         return new ResponseEntity<>("Unable to delete data or invalid product Id", HttpStatus.BAD_REQUEST);

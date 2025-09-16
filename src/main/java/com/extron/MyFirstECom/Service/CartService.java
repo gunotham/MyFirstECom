@@ -29,18 +29,15 @@ public class CartService {
 
     public List<CartItem> getCartItems(Long userId) {
         Users user = userRepo.findById(userId).orElse(null);
+        if(user == null){
+            throw new RuntimeException("User does not exist");
+        }
         Cart cart = cartRepo.findByUserId(userId);
         
         return cart.getItems();
     }
 
     public String addCartItems(Long userId, Long prodId, Integer quantity) {
-        
-        Users user = userRepo.findById(userId).orElse(null);
-        
-        if(user == null){
-            throw new RuntimeException("User not found with ID"+ userId);
-        }
         
         Product product = productRepo.findById(prodId).orElse(null);
         if(product == null){
@@ -59,14 +56,22 @@ public class CartService {
             product.setStockQuantity(product.getStockQuantity() - quantity);
         }
         
-        Cart cart = cartRepo.findByUserId(userId);        
+        Cart cart = cartRepo.findByUserId(userId);
+        if (cart == null) {
+            throw new RuntimeException("Cart not found for user with ID " + userId);
+        }
         
-        CartItem newItem = new CartItem();
-        newItem.setCart(cart);
-        newItem.setProduct(product);
-        newItem.setQuantity(quantity);
-        
-        cartItemRepo.save(newItem);
+        CartItem cartItem = cartItemRepo.findByCartIdAndProductId(cart.getId(), prodId);
+        if(cartItem != null){
+            cartItem.setQuantity(cartItem.getQuantity()+quantity);
+        }
+        else {
+            cartItem = new CartItem();
+            cartItem.setCart(cart);
+            cartItem.setProduct(product);
+            cartItem.setQuantity(quantity);
+        }
+        cartItemRepo.save(cartItem);
         
         return "added to cart!!";
     }
