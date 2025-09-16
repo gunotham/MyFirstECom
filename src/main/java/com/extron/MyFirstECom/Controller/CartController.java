@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.extron.MyFirstECom.DTO.AddToCartDTO;
 import com.extron.MyFirstECom.Model.CartItem;
 import com.extron.MyFirstECom.Service.CartService;
-import com.extron.MyFirstECom.Service.UserService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -23,7 +22,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2 
 public class CartController {
     
-    private CartService cartService;
+    final private CartService cartService;
     
     CartController( CartService cartService){
         this.cartService = cartService;
