@@ -15,5 +15,4 @@ public interface CartItemRepo extends JpaRepository<CartItem, Long> {
     @Query("SELECT SUM(ci.product.price * ci.quantity) FROM CartItem ci WHERE ci.cart.id = :cartId")
     BigDecimal sumOfAllProductPriceWithCartId(@Param("cartId") Long cartId);
     
-    void deleteByCartIdAndProductId(Long cartId, Long productId);
 }
