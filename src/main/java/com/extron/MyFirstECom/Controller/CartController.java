@@ -4,14 +4,9 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.extron.MyFirstECom.DTO.AddToCartDTO;
+import com.extron.MyFirstECom.DTO.CartItemDTO;
 import com.extron.MyFirstECom.Model.CartItem;
 import com.extron.MyFirstECom.Service.CartService;
 
@@ -33,9 +28,9 @@ public class CartController {
             return new ResponseEntity<>(cartService.getCartItems(userId), HttpStatus.OK);
     }
     
-    @PutMapping("/{userId}")
+    @PostMapping("/{userId}")
     public ResponseEntity<String> addCartItems(@PathVariable Long userId,
-                                               @RequestBody AddToCartDTO req){
+                                               @RequestBody CartItemDTO req){
         try{
             cartService.addCartItems(userId, req.getProdId(), req.getQuantity());
             return new ResponseEntity<>("Product added to the cart successfully", HttpStatus.OK);
@@ -43,6 +38,11 @@ public class CartController {
         catch (Exception e){
             return new ResponseEntity<>("Error: "+e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    @PutMapping("/{userId}")
+    public ResponseEntity<String> updateCartItem(@PathVariable Long userId, @RequestBody CartItemDTO cartItemInfo){
+        return new ResponseEntity<>(cartService.updateCartItems(userId, cartItemInfo), HttpStatus.OK);
     }
     
 }

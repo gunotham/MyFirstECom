@@ -1,18 +1,17 @@
 package com.extron.MyFirstECom.Service;
 
+import com.extron.MyFirstECom.DTO.CartItemDTO;
 import com.extron.MyFirstECom.Model.*;
 import com.extron.MyFirstECom.Repository.CartItemRepo;
 import com.extron.MyFirstECom.Repository.CartRepo;
 import com.extron.MyFirstECom.Repository.ProductRepo;
 import com.extron.MyFirstECom.Repository.UserRepo;
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Log4j2
@@ -52,9 +51,6 @@ public class CartService {
         if (product.getStockQuantity()<quantity){
             throw new RuntimeException("Stock quantity is less than "+quantity+" available quantity "+ product.getStockQuantity());
         }
-        else{
-            product.setStockQuantity(product.getStockQuantity() - quantity);
-        }
         
         Cart cart = cartRepo.findByUserId(userId);
         if (cart == null) {
@@ -74,5 +70,24 @@ public class CartService {
         cartItemRepo.save(cartItem);
         
         return "added to cart!!";
+    }
+
+    @Transactional
+    public String updateCartItems(Long userId, CartItemDTO userCartItemInfo) {
+        Cart cart = cartRepo.findByUserId(userId);
+        
+        if(cart ==null){
+            return "Cart is Empty";
+        }
+        else {
+            CartItem cartItem = cartItemRepo.findByCartIdAndProductId(cart.getId(), userCartItemInfo.getProdId());
+            if(userCartItemInfo.getQuantity() == 0){
+                cartItemRepo.delete(cartItem);
+            }
+            else{
+                cartItem.setQuantity(userCartItemInfo.getQuantity());
+            }
+        }
+        return "Cart is updated";
     }
 }
