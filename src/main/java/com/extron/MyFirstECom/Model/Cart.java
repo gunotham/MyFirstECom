@@ -29,7 +29,7 @@ public class Cart {
     
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonManagedReference
+    @JsonManagedReference("user-cart")
     private Users user;
     private Date createdAt;
     

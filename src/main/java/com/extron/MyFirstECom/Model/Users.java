@@ -25,14 +25,14 @@ public class Users {
     private String email;
     
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference("user-cart")
     private Cart cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference("user-orders")
     private List<Order> orders;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-addresses")
     private List<Address> addresses;
 }

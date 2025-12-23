@@ -1,6 +1,7 @@
 package com.extron.MyFirstECom.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +24,7 @@ public class Order {
     
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("user-orders")
     private Users user;
     
     private Date orderedAt;

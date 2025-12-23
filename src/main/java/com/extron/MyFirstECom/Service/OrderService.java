@@ -1,5 +1,8 @@
 package com.extron.MyFirstECom.Service;
 
+import com.extron.MyFirstECom.DTO.OrderItemResponseDTO;
+import com.extron.MyFirstECom.DTO.OrderResponseDTO;
+import com.extron.MyFirstECom.DTO.ProductDTO;
 import com.extron.MyFirstECom.Model.*;
 import com.extron.MyFirstECom.Repository.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,5 +77,42 @@ public class OrderService {
         cartRepo.save(cart);
         
         return ("Order has been placed, the total amount is "+ order.getAmount()+ " and was ordered at "+ order.getOrderedAt());
+    }
+
+    public List<OrderResponseDTO> getAllOrders(Long userId) {
+        
+        List<Order> orders = orderRepo.findAllByUserId(userId);
+        
+        List<OrderResponseDTO> orderResponseDTOList = new ArrayList<>();
+        for(Order order:orders){
+             OrderResponseDTO orderResponseDTO = new OrderResponseDTO();
+             orderResponseDTO.setId(order.getId());
+             orderResponseDTO.setOrderedAt(order.getOrderedAt());
+             orderResponseDTO.setAmount(order.getAmount());
+             List<OrderItemResponseDTO> orderItemResponseDTOList = new ArrayList<>();
+             for(OrderItem orderItem:order.getOrderItems()){
+
+                 OrderItemResponseDTO orderItemResponseDTO = getOrderItemResponseDTO(orderItem);
+                 orderItemResponseDTOList.add(orderItemResponseDTO);
+             }
+             orderResponseDTO.setItems(orderItemResponseDTOList);
+             orderResponseDTOList.add(orderResponseDTO);
+        }
+        
+        return orderResponseDTOList;
+    }
+
+    private static OrderItemResponseDTO getOrderItemResponseDTO(OrderItem orderItem) {
+        OrderItemResponseDTO orderItemResponseDTO = new OrderItemResponseDTO();
+        orderItemResponseDTO.setOrderedPrice(orderItem.getPrice());
+        orderItemResponseDTO.setQuantity(orderItem.getQuantity());
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(orderItem.getProduct().getId());
+        productDTO.setName(orderItem.getProduct().getName());
+        productDTO.setPrice(orderItem.getProduct().getPrice());
+
+        orderItemResponseDTO.setProduct(productDTO);
+        return orderItemResponseDTO;
     }
 }

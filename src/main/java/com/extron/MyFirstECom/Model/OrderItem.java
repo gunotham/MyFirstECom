@@ -12,20 +12,19 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
-
+public class OrderItem {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
+    private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    private Product product;
+    
+    @ManyToOne
     @JsonBackReference
-    private Category category;
+    private Order order;
     
-    private String description;
     private BigDecimal price;
-    private int stockQuantity;
-    
+    private Integer quantity;
 }
